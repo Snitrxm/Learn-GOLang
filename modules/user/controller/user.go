@@ -1,4 +1,4 @@
-package routes
+package userController
 
 import (
 	"projeto/models"
@@ -49,7 +49,7 @@ func GetUsers(c *fiber.Ctx) error {
 	return c.Status(200).JSON(responseUsers);
 }
 
-func findUser(id int, user *models.User) error {
+func FindUser(id int, user *models.User) error {
 	database.Database.Db.Find(&user, "id = ?", id)
 
 	if user.ID == 0 {
@@ -68,7 +68,7 @@ func GetUserById(c *fiber.Ctx) error {
 
 	var user models.User
 
-	if err := findUser(id, &user); err != nil {
+	if err := FindUser(id, &user); err != nil {
 		return c.Status(404).JSON(err.Error());
 	}
 
@@ -86,7 +86,7 @@ func UpdateUserById(c *fiber.Ctx) error {
 
 	var user models.User
 
-	if err := findUser(id, &user); err != nil {
+	if err := FindUser(id, &user); err != nil {
 		return c.Status(404).JSON(err.Error());
 	}
 
@@ -125,7 +125,7 @@ func DeleteUserById(c *fiber.Ctx) error {
 
 	var user models.User
 
-	if err := findUser(id, &user); err != nil {
+	if err := FindUser(id, &user); err != nil {
 		return c.Status(404).JSON(err.Error());
 	}
 
